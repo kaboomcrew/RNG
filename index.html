@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>replit</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+    body {
+        background: linear-gradient(180deg, #50d7d9, #50d9d9);
+        animation: gradient 15s ease infinite;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .MainContent {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgb(80, 252, 252);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 40%;
+        height: 250px;
+
+        perspective: 1000px;
+        transform-style: preserve-3d;
+    }
+
+    .SpinButton {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 10px;
+        height: 75px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 5px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: rgba(255, 194, 194, 0.582);
+        font-size: 25px;
+        transition: background-color 0.3s ease;
+        /* Smooth hover transition */
+    }
+
+    @keyframes Animation {
+        0% {
+            transform: translate(-50%, -50%) rotateX(0deg);
+        }
+
+        50% {
+            transform: translate(-50%, -50%) rotateX(180deg);
+        }
+
+        100% {
+            transform: translate(-50%, -50%) rotateX(360deg);
+        }
+    }
+
+    .SpinButton:hover {
+        background-color: rgba(255, 174, 174, 0.863);
+    }
+
+    /* Animation applied to target elements only */
+    .animate {
+        animation: Animation 1s forwards;
+    }
+
+    .Text {
+        font-family: cursive;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .Topsec {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+</style>
+
+<body>
+    <header class="Topsec">
+        <h2>best Spins:</h2>
+        <p id="A">Spin to see! 1</p>
+        <p id="B">Spin to see! 1</p>
+        <p id="C">Spin to see! 1</p>
+        <p id="D">Spin to see! 1</p>
+        <p id="E">Spin to see! 1</p>
+    </header>
+    <div class="MainContent">
+        <p class="Text" id="DisplayText">Press spin to roll!</p>
+        <button class="SpinButton" id="SpinButton" onclick="Spin()">Spin</button>
+    </div>
+    <script>
+        document.getElementById('SpinButton').addEventListener('click', function () {
+            const mainContent = document.querySelector('.MainContent'); // Target MainContent
+            mainContent.classList.add('animate');
+            document.getElementById("SpinButton").disabled = true;
+            document.getElementById("DisplayText").style.display = "none";
+            setTimeout(() => {
+                document.getElementById("DisplayText").style.display = "block";
+            }, 200);
+
+            // Remove the animation class after it completes
+            mainContent.addEventListener('animationend', function () {
+                mainContent.classList.remove('animate');
+                document.getElementById("SpinButton").disabled = false;
+            }, { once: true });
+        });
+
+
+
+
+
+        let titles = {
+            "R1": ["Common", "500", "1"],
+            "R2": ["Uncommon", "300", "3"],
+            "R3": ["Rare", "150", "4"],
+            "R4": ["Epic", "50", "75"],
+            "R5": ["Legendary", "10", "151"],
+            "R6": ["Mythic", "5", "214"],
+            "R7": ["Exotic", "2", "455"],
+            "R8": ["Unobtainable", "1", "5603"]
+        };
+
+        let chancenumbers = [
+            "500",
+            "300",
+            "150",
+            "50",
+            "10",
+            "5",
+            "2",
+            "1"
+        ]
+
+        let RandomChance = 0;
+        for (let value of Object.values(titles)) {
+            RandomChance += parseInt(value[1]);
+        }
+
+        let names = [
+            "Ancient Diary",
+            "Torn Scroll",
+            "Forgotten Relic",
+            "Lost Scroll",
+            "Mysterious Book",
+            "Ancient Artifact",
+            "Lost Relic",
+            "Hidden Archive",
+            "Dirty Picture",
+            "Anchient Script",
+            "Sacred Codex",
+            "Ethereal Tablet",
+            "Dusty Chronicle",
+            "Enchanted Tome",
+            "Obscure Manuscript",
+            "Runic Inscription",
+            "Forgotten Codex",
+            "Hidden Ledger",
+            "Worn Parchment",
+            "Cursed Relic",
+            "Mystic Grimoire",
+            "Shadowed Compendium",
+            "Sealed Scroll",
+            "Cryptic Inscription",
+            "Ancient Map",
+            "Hollowed Chronicle",
+            "Shattered Relic",
+            "Veiled Tablet",
+            "Arcane Fragment",
+            "Pristine Relic"
+        ];
+
+
+
+
+        const BestSpinA = document.getElementById("A");
+        const BestSpinB = document.getElementById("B");
+        const BestSpinC = document.getElementById("C");
+        const BestSpinD = document.getElementById("D");
+        const BestSpinE = document.getElementById("E");
+
+
+        console.log(RandomChance)
+
+
+
+        function Spin() {
+            let name = names[Math.floor(Math.random() * names.length)];
+            let ResultString = "";
+
+            let RandomNum = Math.floor(Math.random() * RandomChance);
+            console.log(RandomNum)
+
+            var round = 0
+
+
+
+            if (RandomNum > 1016) {
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 2000);
+
+                ResultString = `Unobtainable ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Unobtainable", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            } else if (RandomNum > 1005 && RandomNum < 1016) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 500);
+
+                ResultString = `Exotic ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Exotic", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            } else if (RandomNum > 950 && RandomNum < 1005) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 100);
+
+                ResultString = `Mythic ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Mythic", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            } else if (RandomNum > 800 && RandomNum < 950) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 50);
+
+                ResultString = `Legendary ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Legendary", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            } else if (RandomNum > 725 && RandomNum < 800) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 30);
+
+                ResultString = `Epic ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Epic", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            } else if (RandomNum > 450 && RandomNum < 725) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 10);
+
+                ResultString = `Uncommon ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Uncommon", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            } else if (RandomNum < 450) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100);
+
+                ResultString = `Common ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Common", name, DiscoveryChance);
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+            }
+
+
+
+
+
+
+
+        }
+
+        function findnum(string) {
+            if (!string) return 0; // Handle empty string
+            let stringlist = string.split(" ");
+            let num = stringlist[stringlist.length - 1];
+            num = num.replace(")", "");
+            return parseInt(num) || 0; // Ensure it returns a number
+        }
+
+        function UpdateLeaderBoard(Rareity, name, Varin) {
+            if (Varin > findnum(BestSpinA.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinC.innerHTML = BestSpinB.innerHTML
+                BestSpinB.innerHTML = BestSpinA.innerHTML
+
+                BestSpinA.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                return;
+            }
+            if (Varin > findnum(BestSpinB.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinC.innerHTML = BestSpinB.innerHTML
+
+                BestSpinB.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                return;
+            }
+            if (Varin > findnum(BestSpinC.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinD.innerHTML = BestSpinC.innerHTML
+
+                BestSpinC.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                return;
+            }
+            if (Varin > findnum(BestSpinD.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+
+                BestSpinD.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                return;
+            }
+            if (Varin > findnum(BestSpinE.innerHTML)) {
+                BestSpinE.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                return;
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
