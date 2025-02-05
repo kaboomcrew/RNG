@@ -100,16 +100,18 @@
 <body>
     <header class="Topsec">
         <h2>best Spins:</h2>
-        <p id="A">Spin to see! 1</p>
-        <p id="B">Spin to see! 1</p>
-        <p id="C">Spin to see! 1</p>
-        <p id="D">Spin to see! 1</p>
-        <p id="E">Spin to see! 1</p>
-    </header>
-    <div class="MainContent">
+        <p id="A">Spin to see! 0</p>
+        <p id="B">Spin to see! 0</p>
+        <p id="C">Spin to see! 0</p>
+        <p id="D">Spin to see! 0</p>
+        <p id="E">Spin to see! 0</p>
+    </header> 
+    <div class="MainContent" id="centerdiv">
         <p class="Text" id="DisplayText">Press spin to roll!</p>
         <button class="SpinButton" id="SpinButton" onclick="Spin()">Spin</button>
     </div>
+
+
     <script>
         document.getElementById('SpinButton').addEventListener('click', function () {
             const mainContent = document.querySelector('.MainContent'); // Target MainContent
@@ -188,7 +190,16 @@
             "Shattered Relic",
             "Veiled Tablet",
             "Arcane Fragment",
-            "Pristine Relic"
+            "Pristine Relic",
+            "Death scroll",
+            "Gamblers scroll",
+            "Rift Relic",
+            "Ancient Dictionary",
+            "limitless scroll",
+            "red glory stone",
+            "the fallen samurais relic",
+            "the legendary chromatic skull",
+            "the skull of the king"
         ];
 
 
@@ -213,6 +224,8 @@
             console.log(RandomNum)
 
             var round = 0
+
+            const centerdiv = document.getElementById("centerdiv");
 
 
 
@@ -298,6 +311,8 @@
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "grey";
 
             }
 
