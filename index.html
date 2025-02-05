@@ -4,16 +4,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>replit</title>
+    <title>Kaboom's RNG</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://www.canva.com/design/DAGeRu_-NW4/dDgGR5rLbzF7jHU4-6LQIQ/view?embed">
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <style>
     body {
-        background: linear-gradient(180deg, #c5c5c5, #cdf1f1);
+        background: linear-gradient(180deg, #97f1fd, #d2ffff);
         animation: gradient 15s ease infinite;
         background-repeat: no-repeat;
         height: 100vh;
         width: 100%;
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
     }
 
     @keyframes gradient {
@@ -31,6 +39,12 @@
     }
 
     .MainContent {
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
         position: fixed;
         left: 50%;
         top: 50%;
@@ -47,6 +61,12 @@
     }
 
     .SpinButton {
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
@@ -77,8 +97,39 @@
         }
     }
 
+    @keyframes GoodSpin {
+        0% {
+            height: 250px;
+            width: 40%;
+        }
+
+        25% {
+            height: 300px;
+            width: 50%;
+        }
+
+        50% {
+            height: 250px;
+            width: 40%;
+        }
+
+        75% {
+            height: 300px;
+            width: 50%;
+        }
+
+        100% {
+            height: 250px;
+            width: 40%;
+        }
+    }
+
     .SpinButton:hover {
         background-color: rgba(255, 136, 136, 0.863);
+    }
+
+    .Breathe {
+        animation: GoodSpin 1s infinite;
     }
 
     /* Animation applied to target elements only */
@@ -87,34 +138,55 @@
     }
 
     .Text {
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
         font-family: cursive;
         color: white;
-        font-size: 30px;
+        font-size: 40px;
         text-align: center;
-        -webkit-text-stroke: black 0.5px;
+        -webkit-text-stroke: black 1px;
     }
 
     .Topsec {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
+
+    .Padding {
+        padding-left: 50px;
+    }
 </style>
 
 <body>
     <header class="Topsec">
+        <h2 style="position: fixed; top: 0; left: 50%; transform: translateX(-50%);">Credits: <a id="Credits">0</a></h2>
         <h2>best Spins:</h2>
         <p id="A">Spin to see! 0</p>
         <p id="B">Spin to see! 0</p>
         <p id="C">Spin to see! 0</p>
         <p id="D">Spin to see! 0</p>
         <p id="E">Spin to see! 0</p>
-    </header> 
-    <div class="MainContent" id="centerdiv">
-        <p class="Text" id="DisplayText">Press spin to roll!</p>
-        <button class="SpinButton" id="SpinButton" onclick="Spin()">Spin</button>
+    </header>
+    <div class="Padding">
+        <div class="MainContent" id="centerdiv">
+            <p class="Text" id="DisplayText">Press spin to roll!</p>
+            <button class="SpinButton" id="SpinButton" onclick="Spin()">Spin</button>
+        </div>
     </div>
 
 
     <script>
+        var Credits = 0;
+
+        function UpdateCredits() {
+            document.getElementById("Credits").innerHTML = Credits;
+        }
+        setInterval(UpdateCredits, 100)
+
+
         document.getElementById('SpinButton').addEventListener('click', function () {
             const mainContent = document.querySelector('.MainContent'); // Target MainContent
             mainContent.classList.add('animate');
@@ -130,6 +202,19 @@
                 document.getElementById("SpinButton").disabled = false;
             }, { once: true });
         });
+
+
+
+        function PlayRareAnimation() {
+            const mainContent = document.querySelector('.MainContent');
+            mainContent.classList.add('Breathe');
+        }
+
+        function StopAnimation() {
+            const mainContent = document.querySelector('.MainContent');
+            mainContent.classList.remove('Breathe');
+        }
+
 
 
 
@@ -224,6 +309,8 @@
 
 
         function Spin() {
+            StopAnimation()
+
             let name = names[Math.floor(Math.random() * names.length)];
             let ResultString = "";
 
@@ -244,6 +331,9 @@
 
                 UpdateLeaderBoard("Unobtainable", name, DiscoveryChance, "#DC2367");
 
+                PlayRareAnimation()
+
+
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
@@ -257,6 +347,9 @@
 
 
                 UpdateLeaderBoard("Exotic", name, DiscoveryChance, "#7B241C");
+
+                PlayRareAnimation()
+
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
@@ -272,6 +365,9 @@
 
                 UpdateLeaderBoard("Mythic", name, DiscoveryChance, "#D35400");
 
+                PlayRareAnimation()
+
+
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
@@ -285,6 +381,9 @@
 
 
                 UpdateLeaderBoard("Legendary", name, DiscoveryChance, "#947b19");
+
+                PlayRareAnimation()
+
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
