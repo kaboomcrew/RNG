@@ -9,7 +9,7 @@
 </head>
 <style>
     body {
-        background: linear-gradient(180deg, #50d7d9, #50d9d9);
+        background: linear-gradient(180deg, #c5c5c5, #cdf1f1);
         animation: gradient 15s ease infinite;
         background-repeat: no-repeat;
         height: 100vh;
@@ -54,12 +54,12 @@
         height: 75px;
         width: 300px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border: none;
+        border: solid 2px rgb(78, 78, 78);
         border-radius: 5px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        background-color: rgba(255, 194, 194, 0.582);
+        background-color: rgba(255, 255, 255, 0.582);
         font-size: 25px;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.2s ease;
         /* Smooth hover transition */
     }
 
@@ -78,7 +78,7 @@
     }
 
     .SpinButton:hover {
-        background-color: rgba(255, 174, 174, 0.863);
+        background-color: rgba(255, 136, 136, 0.863);
     }
 
     /* Animation applied to target elements only */
@@ -88,8 +88,10 @@
 
     .Text {
         font-family: cursive;
-        font-size: 25px;
+        color: white;
+        font-size: 30px;
         text-align: center;
+        -webkit-text-stroke: black 0.5px;
     }
 
     .Topsec {
@@ -197,9 +199,14 @@
             "Ancient Dictionary",
             "limitless scroll",
             "red glory stone",
-            "the fallen samurais relic",
-            "the legendary chromatic skull",
-            "the skull of the king"
+            "fallen samurais relic",
+            "legendary chromatic skull",
+            "skull of the king",
+            "Honored Ones Glory",
+            "Death note",
+            "Devs Domain???",
+            "Kabooms Relic",
+            "ERROR_CODE"
         ];
 
 
@@ -230,89 +237,101 @@
 
 
             if (RandomNum > 1016) {
-                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 2000);
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 500) * Math.floor(Math.random() * 2000);
 
                 ResultString = `Unobtainable ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Unobtainable", name, DiscoveryChance);
+                UpdateLeaderBoard("Unobtainable", name, DiscoveryChance, "#DC2367");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
+                centerdiv.style.backgroundColor = "#DC2367";
+
             } else if (RandomNum > 1005 && RandomNum < 1016) {
 
-                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 500);
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 400) * Math.floor(Math.random() * 500);
 
                 ResultString = `Exotic ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Exotic", name, DiscoveryChance);
+                UpdateLeaderBoard("Exotic", name, DiscoveryChance, "#7B241C");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
-            } else if (RandomNum > 950 && RandomNum < 1005) {
+                centerdiv.style.backgroundColor = "#7B241C";
 
-                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 100);
+            } else if (RandomNum > 975 && RandomNum < 1005) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 300) * Math.floor(Math.random() * 100);
 
                 ResultString = `Mythic ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Mythic", name, DiscoveryChance);
+                UpdateLeaderBoard("Mythic", name, DiscoveryChance, "#D35400");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
-            } else if (RandomNum > 800 && RandomNum < 950) {
+                centerdiv.style.backgroundColor = "#D35400";
 
-                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 50);
+            } else if (RandomNum > 900 && RandomNum < 975) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 250) * Math.floor(Math.random() * 50);
 
                 ResultString = `Legendary ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Legendary", name, DiscoveryChance);
+                UpdateLeaderBoard("Legendary", name, DiscoveryChance, "#947b19");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
-            } else if (RandomNum > 725 && RandomNum < 800) {
+                centerdiv.style.backgroundColor = "#F1C40F";
 
-                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 30);
+            } else if (RandomNum > 800 && RandomNum < 900) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 100) * Math.floor(Math.random() * 30);
 
                 ResultString = `Epic ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Epic", name, DiscoveryChance);
+                UpdateLeaderBoard("Epic", name, DiscoveryChance, "#2471A3");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
-            } else if (RandomNum > 450 && RandomNum < 725) {
+                centerdiv.style.backgroundColor = "#2471A3";
+
+            } else if (RandomNum > 500 && RandomNum < 800) {
 
                 var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 10);
 
                 ResultString = `Uncommon ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Uncommon", name, DiscoveryChance);
+                UpdateLeaderBoard("Uncommon", name, DiscoveryChance, "#27AE60");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
-            } else if (RandomNum < 450) {
+                centerdiv.style.backgroundColor = "#27AE60";
+
+            } else if (RandomNum < 500) {
 
                 var DiscoveryChance = Math.floor(Math.random() * 100);
 
                 ResultString = `Common ${name} (1 in ${DiscoveryChance})`;
 
 
-                UpdateLeaderBoard("Common", name, DiscoveryChance);
+                UpdateLeaderBoard("Common", name, DiscoveryChance, "#AAAAAA");
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
-                centerdiv.style.backgroundColor = "grey";
+                centerdiv.style.backgroundColor = "#AAAAAA";
 
             }
 
@@ -332,39 +351,60 @@
             return parseInt(num) || 0; // Ensure it returns a number
         }
 
-        function UpdateLeaderBoard(Rareity, name, Varin) {
+        function UpdateLeaderBoard(Rareity, name, Varin, color) {
             if (Varin > findnum(BestSpinA.innerHTML)) {
                 BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
                 BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinD.style.color = BestSpinC.style.color
+
                 BestSpinC.innerHTML = BestSpinB.innerHTML
+                BestSpinC.style.color = BestSpinB.style.color
+
                 BestSpinB.innerHTML = BestSpinA.innerHTML
+                BestSpinB.style.color = BestSpinA.style.color
 
                 BestSpinA.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinA.style.color = color;
                 return;
             }
             if (Varin > findnum(BestSpinB.innerHTML)) {
                 BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
                 BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinD.style.color = BestSpinC.style.color
+
                 BestSpinC.innerHTML = BestSpinB.innerHTML
+                BestSpinC.style.color = BestSpinB.style.color
 
                 BestSpinB.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinB.style.color = color;
                 return;
             }
             if (Varin > findnum(BestSpinC.innerHTML)) {
                 BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
                 BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinD.style.color = BestSpinC.style.color
 
                 BestSpinC.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinC.style.color = color;
                 return;
             }
             if (Varin > findnum(BestSpinD.innerHTML)) {
                 BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
 
                 BestSpinD.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinD.style.color = color;
                 return;
             }
             if (Varin > findnum(BestSpinE.innerHTML)) {
                 BestSpinE.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinE.style.color = color;
                 return;
             }
         }
