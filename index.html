@@ -48,7 +48,7 @@
         position: fixed;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-40%, -50%);
         background-color: rgb(80, 252, 252);
         padding: 20px;
         border-radius: 10px;
@@ -85,15 +85,15 @@
 
     @keyframes Animation {
         0% {
-            transform: translate(-50%, -50%) rotateX(0deg);
+            transform: translate(-40%, -50%) rotateX(0deg);
         }
 
         50% {
-            transform: translate(-50%, -50%) rotateX(180deg);
+            transform: translate(-40%, -50%) rotateX(180deg);
         }
 
         100% {
-            transform: translate(-50%, -50%) rotateX(360deg);
+            transform: translate(-40%, -50%) rotateX(360deg);
         }
     }
 
@@ -152,17 +152,24 @@
     }
 
     .Topsec {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: cursive;
     }
 
     .Padding {
         padding-left: 50px;
     }
+    .BottomSection {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding-bottom: 10px;
+    }
 </style>
 
 <body>
+    <p id="DisplayText2">HELLO</p>
     <header class="Topsec">
-        <h2 style="position: fixed; top: 0; left: 50%; transform: translateX(-50%);">Credits: <a id="Credits">0</a></h2>
+        <h2 style="position: fixed; top: 0; left: 50%; transform: translateX(-40%);">Credits: <a id="Credits">0</a></h2>
         <h2>best Spins:</h2>
         <p id="A">Spin to see! 0</p>
         <p id="B">Spin to see! 0</p>
@@ -170,6 +177,12 @@
         <p id="D">Spin to see! 0</p>
         <p id="E">Spin to see! 0</p>
     </header>
+    <footer class="BottomSection">
+        <h2>Spin Shop</h2>
+        <button id="buttonA" onclick="UpgradeChances()">Better Spins $<a id="buttonAprice">10</a></button>
+        <p></p>
+        <button>More Credits </button>
+    </footer>
     <div class="Padding">
         <div class="MainContent" id="centerdiv">
             <p class="Text" id="DisplayText">Press spin to roll!</p>
@@ -181,8 +194,23 @@
     <script>
         var Credits = 0;
 
+
+        var Unobtainable = 1016;
+        var Exotic = 1005;
+        var Mythic = 975;
+        var legendary = 900;
+        var Epic = 800;
+        var Uncommon = 500;
+
+        var Upgrade1Price = 10;
+        var Upgrade2Price = 20;
+
+        var coinsMultiplier = 1;
+
+
         function UpdateCredits() {
             document.getElementById("Credits").innerHTML = Credits;
+            document.getElementById("buttonAprice").innerHTML = Upgrade1Price;
         }
         setInterval(UpdateCredits, 100)
 
@@ -216,6 +244,38 @@
         }
 
 
+
+
+        function UpgradeChances() {
+            if (Credits >= Upgrade1Price) {
+                var ChanceIncrease = 4;
+                if (Uncommon >= 100) {
+                    Exotic -= ChanceIncrease;
+                    Mythic -= ChanceIncrease;
+                    legendary -= ChanceIncrease;
+                    Epic -= ChanceIncrease;
+                    Uncommon -= ChanceIncrease;
+                    
+                    Credits -= Upgrade1Price;
+                    Upgrade1Price += 10;
+
+                    document.getElementById("DisplayText2").innerHTML = Exotic + " " + Mythic + " " + legendary + " " + Epic + " " + Uncommon
+                }
+            } else {
+                const button = document.getElementById("buttonA");
+                let buttonhtml = button.innerHTML;
+
+                button.innerHTML = "Not enough credits!"
+                setTimeout(() => {
+                    button.innerHTML = buttonhtml;
+                }, 600);
+            }
+
+        }
+
+        function UpgradeCoins() {
+
+        }
 
 
 
@@ -308,6 +368,8 @@
 
 
 
+
+
         function Spin() {
             StopAnimation()
 
@@ -323,7 +385,7 @@
 
 
 
-            if (RandomNum > 1016) {
+            if (RandomNum > Unobtainable) {
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 500) * Math.floor(Math.random() * 2000);
 
                 ResultString = `Unobtainable ${name} (1 in ${DiscoveryChance})`;
@@ -333,13 +395,15 @@
 
                 PlayRareAnimation()
 
+                Credits += 30;
+
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
                 centerdiv.style.backgroundColor = "#DC2367";
 
-            } else if (RandomNum > 1005 && RandomNum < 1016) {
+            } else if (RandomNum > Exotic && RandomNum < Unobtainable) {
 
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 400) * Math.floor(Math.random() * 500);
 
@@ -347,6 +411,8 @@
 
 
                 UpdateLeaderBoard("Exotic", name, DiscoveryChance, "#7B241C");
+
+                Credits += 20;
 
                 PlayRareAnimation()
 
@@ -356,7 +422,7 @@
 
                 centerdiv.style.backgroundColor = "#7B241C";
 
-            } else if (RandomNum > 975 && RandomNum < 1005) {
+            } else if (RandomNum > Mythic && RandomNum < Exotic) {
 
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 300) * Math.floor(Math.random() * 100);
 
@@ -364,6 +430,8 @@
 
 
                 UpdateLeaderBoard("Mythic", name, DiscoveryChance, "#D35400");
+
+                Credits += 15;
 
                 PlayRareAnimation()
 
@@ -373,7 +441,7 @@
 
                 centerdiv.style.backgroundColor = "#D35400";
 
-            } else if (RandomNum > 900 && RandomNum < 975) {
+            } else if (RandomNum > legendary && RandomNum < Mythic) {
 
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 250) * Math.floor(Math.random() * 50);
 
@@ -381,6 +449,8 @@
 
 
                 UpdateLeaderBoard("Legendary", name, DiscoveryChance, "#947b19");
+
+                Credits += 10;
 
                 PlayRareAnimation()
 
@@ -390,7 +460,7 @@
 
                 centerdiv.style.backgroundColor = "#F1C40F";
 
-            } else if (RandomNum > 800 && RandomNum < 900) {
+            } else if (RandomNum > Epic && RandomNum < legendary) {
 
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 100) * Math.floor(Math.random() * 30);
 
@@ -399,12 +469,14 @@
 
                 UpdateLeaderBoard("Epic", name, DiscoveryChance, "#2471A3");
 
+                Credits += 5;
+
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
                 centerdiv.style.backgroundColor = "#2471A3";
 
-            } else if (RandomNum > 500 && RandomNum < 800) {
+            } else if (RandomNum > Uncommon && RandomNum < Epic) {
 
                 var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 10);
 
@@ -413,12 +485,14 @@
 
                 UpdateLeaderBoard("Uncommon", name, DiscoveryChance, "#27AE60");
 
+                Credits += 2;
+
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
 
                 centerdiv.style.backgroundColor = "#27AE60";
 
-            } else if (RandomNum < 500) {
+            } else if (RandomNum < Uncommon) {
 
                 var DiscoveryChance = Math.floor(Math.random() * 100);
 
@@ -426,6 +500,8 @@
 
 
                 UpdateLeaderBoard("Common", name, DiscoveryChance, "#AAAAAA");
+
+                Credits += 1;
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
