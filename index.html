@@ -22,6 +22,7 @@
         /* IE 10 and IE 11 */
         user-select: none;
         /* Standard syntax */
+        overflow: hidden;
     }
 
     @keyframes gradient {
@@ -48,7 +49,7 @@
         position: fixed;
         left: 50%;
         top: 50%;
-        transform: translate(-40%, -50%);
+        transform: translate(-30%, -50%);
         background-color: rgb(80, 252, 252);
         padding: 20px;
         border-radius: 10px;
@@ -85,15 +86,15 @@
 
     @keyframes Animation {
         0% {
-            transform: translate(-40%, -50%) rotateX(0deg);
+            transform: translate(-30%, -50%) rotateX(0deg);
         }
 
         50% {
-            transform: translate(-40%, -50%) rotateX(180deg);
+            transform: translate(-30%, -50%) rotateX(180deg);
         }
 
         100% {
-            transform: translate(-40%, -50%) rotateX(360deg);
+            transform: translate(-30%, -50%) rotateX(360deg);
         }
     }
 
@@ -153,23 +154,58 @@
 
     .Topsec {
         font-family: cursive;
+        width: 300px;
+        height: 260px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgb(82, 82, 82);
+        text-align: center;
     }
 
     .Padding {
         padding-left: 50px;
     }
+
     .BottomSection {
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        position: absolute;
+        bottom: 20px;
         padding-bottom: 10px;
+        height: 260px;
+        width: 300px;
+        background-color: white;
+        font-family: cursive;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgb(82, 82, 82);
+    }
+
+    .UpgradeButton {
+        height: 40px;
+        width: 250px;
+        background-color: rgb(104, 192, 214);
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 0 10px rgb(82, 82, 82);
+        transition: 0.1s ease;
+    }
+
+    .UpgradeButton:hover {
+        background-color: rgb(180, 217, 226);
+        height: 50px;
+        width: 260px;
+    }
+
+    .UpgradeButton:active {
+        background-color: rgb(31, 184, 223);
+        height: 40px;
+        width: 250px;
     }
 </style>
 
 <body>
-    <p id="DisplayText2">HELLO</p>
+    <div class="animate"></div>
     <header class="Topsec">
-        <h2 style="position: fixed; top: 0; left: 50%; transform: translateX(-40%);">Credits: <a id="Credits">0</a></h2>
+        <h2 style="position: fixed; top: 0; left: 50%; transform: translateX(-30%);">Credits: <a id="Credits">0</a></h2>
         <h2>best Spins:</h2>
         <p id="A">Spin to see! 0</p>
         <p id="B">Spin to see! 0</p>
@@ -179,11 +215,14 @@
     </header>
     <footer class="BottomSection">
         <h2>Spin Shop</h2>
-        <button id="buttonA" onclick="UpgradeChances()">Better Spins $<a id="buttonAprice">10</a></button>
+        <button id="buttonA" class="UpgradeButton" onclick="UpgradeChances()">Better Spins $<a
+                id="buttonAprice">10</a></button>
         <p></p>
-        <button onclick="UpgradeCoins()">More Credits $<a id="buttonBprice">50</a></button>
+        <button id="buttonB" class="UpgradeButton" onclick="UpgradeCoins()">More Credits $<a
+                id="buttonBprice">50</a></button>
         <p></p>
-        <button onclick="UpgradeSpeed()">Faster Spins $<a id="buttonCprice">100</a></button>
+        <button id="buttonC" class="UpgradeButton" onclick="UpgradeSpeed()">Faster Spins $<a
+                id="buttonCprice">100</a></button>
     </footer>
     <div class="Padding">
         <div class="MainContent" id="centerdiv">
@@ -209,19 +248,21 @@
         var Upgrade3price = 100;
 
         var coinsMultiplier = 1;
+        var animationSpeed = 1;
 
 
         function UpdateCredits() {
             document.getElementById("Credits").innerHTML = Credits;
             document.getElementById("buttonAprice").innerHTML = Upgrade1Price;
             document.getElementById("buttonBprice").innerHTML = Upgrade2Price;
+            document.getElementById("buttonCprice").innerHTML = Upgrade3price;
         }
         setInterval(UpdateCredits, 100)
 
 
         document.getElementById('SpinButton').addEventListener('click', function () {
             const mainContent = document.querySelector('.MainContent'); // Target MainContent
-            mainContent.classList.add('animate');
+            mainContent.style.animation = `Animation ${animationSpeed}s forwards`;
             document.getElementById("SpinButton").disabled = true;
             document.getElementById("DisplayText").style.display = "none";
             setTimeout(() => {
@@ -230,7 +271,7 @@
 
             // Remove the animation class after it completes
             mainContent.addEventListener('animationend', function () {
-                mainContent.classList.remove('animate');
+                mainContent.style.animation = "none";
                 document.getElementById("SpinButton").disabled = false;
             }, { once: true });
         });
@@ -239,17 +280,18 @@
 
         function PlayRareAnimation() {
             const mainContent = document.querySelector('.MainContent');
-            mainContent.classList.add('Breathe');
+            mainContent.style.animation = "GoodSpin 1s infinite";
         }
 
         function StopAnimation() {
             const mainContent = document.querySelector('.MainContent');
-            mainContent.classList.remove('Breathe');
+            mainContent.style.animation = "none";
         }
 
 
 
 
+        let Debounce1 = false;
         function UpgradeChances() {
             if (Credits >= Upgrade1Price) {
                 var ChanceIncrease = 4;
@@ -259,59 +301,95 @@
                     legendary -= ChanceIncrease;
                     Epic -= ChanceIncrease;
                     Uncommon -= ChanceIncrease;
-                    
+
                     Credits -= Upgrade1Price;
                     Upgrade1Price += 5;
 
-                    document.getElementById("DisplayText2").innerHTML = Exotic + " " + Mythic + " " + legendary + " " + Epic + " " + Uncommon
                 } else {
+                    if (Debounce1 == false) {
+                        const button = document.getElementById("buttonA");
+                        let buttonhtml = button.innerHTML;
+
+                        button.innerHTML = "Max level Reached!"
+                        Debounce1 = true;
+                        setTimeout(() => {
+                            button.innerHTML = buttonhtml;
+                            Debounce1 = false;
+                        }, 600);
+                    }
+                }
+            } else {
+                if (Debounce1 == false) {
                     const button = document.getElementById("buttonA");
                     let buttonhtml = button.innerHTML;
 
-                    button.innerHTML = "Max level Reached!"
+                    button.innerHTML = "Not enough credits!"
+                    Debounce1 = true;
                     setTimeout(() => {
                         button.innerHTML = buttonhtml;
+                        Debounce1 = false;
                     }, 600);
                 }
-            } else {
-                const button = document.getElementById("buttonA");
-                let buttonhtml = button.innerHTML;
-
-                button.innerHTML = "Not enough credits!"
-                setTimeout(() => {
-                    button.innerHTML = buttonhtml;
-                }, 600);
             }
 
         }
 
+        let Debounce2 = false;
         function UpgradeCoins() {
             if (Credits >= Upgrade2Price) {
                 coinsMultiplier += 1;
+                
+                Credits -= Upgrade2Price;
                 Upgrade2Price += 25;
             } else {
-                const button = document.getElementById("buttonB");
-                let buttonhtml = button.innerHTML;
+                if (Debounce2 == false) {
+                    const button = document.getElementById("buttonB");
+                    let buttonhtml = button.innerHTML;
 
-                button.innerHTML = "Not enough credits!"
-                setTimeout(() => {
-                    button.innerHTML = buttonhtml;
-                }, 600);
+                    button.innerHTML = "Not enough credits!"
+                    Debounce2 = true;
+                    setTimeout(() => {
+                        button.innerHTML = buttonhtml;
+                        Debounce2 = false;
+                    }, 600);
+                }
             }
-        } 
+        }
 
-        var animationSpeed = 1;
 
+        let Debounce3 = false;
         function UpgradeSpeed() {
-            if (Credits >= 1) {
-                animationSpeed = Math.max(0.1, animationSpeed - 0.1); // Prevent negative speed
+            if (Credits >= Upgrade3price) {
+                if (animationSpeed || 0.1) {
+                    animationSpeed = Math.max(0.1, animationSpeed - 0.1);
+                    Credits -= Upgrade3price;
+                    Upgrade3price += 100;
 
-                document.querySelectorAll(".animate").forEach(element => {
-                    element.style.animation = 'none'; // Reset animation
-                    void element.offsetWidth; // Force reflow to restart animation
-                    element.style.animation = `Animation ${animationSpeed}s forwards`;
-                });
+                } else {
+                    if (Debounce3 == false) {
+                        const button = document.getElementById("buttonB");
+                        let buttonhtml = button.innerHTML;
 
+                        button.innerHTML = "Max Level Reached!";
+                        Debounce3 = true;
+                        setTimeout(() => {
+                            button.innerHTML = buttonhtml;
+                            Debounce3 = false;
+                        }, 600);
+                    }
+                }
+            } else {
+                if (Debounce3 == false) {
+                    const button = document.getElementById("buttonC");
+                    let buttonhtml = button.innerHTML;
+
+                    button.innerHTML = "Not enough credits!"
+                    Debounce3 = true;
+                    setTimeout(() => {
+                        button.innerHTML = buttonhtml;
+                        Debounce3 = false;
+                    }, 600);
+                }
             }
         }
 
@@ -417,7 +495,6 @@
             let ResultString = "";
 
             let RandomNum = Math.floor(Math.random() * RandomChance);
-            console.log(RandomNum)
 
             var round = 0
 
@@ -425,7 +502,7 @@
 
 
 
-            if (RandomNum > Unobtainable) {
+            if (RandomNum > Exotic) {
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 500) * Math.floor(Math.random() * 2000);
 
                 ResultString = `Unobtainable ${name} (1 in ${DiscoveryChance})`;
