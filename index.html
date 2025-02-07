@@ -181,7 +181,9 @@
         <h2>Spin Shop</h2>
         <button id="buttonA" onclick="UpgradeChances()">Better Spins $<a id="buttonAprice">10</a></button>
         <p></p>
-        <button>More Credits </button>
+        <button onclick="UpgradeCoins()">More Credits $<a id="buttonBprice">50</a></button>
+        <p></p>
+        <button onclick="UpgradeSpeed()">Faster Spins $<a id="buttonCprice">100</a></button>
     </footer>
     <div class="Padding">
         <div class="MainContent" id="centerdiv">
@@ -203,7 +205,8 @@
         var Uncommon = 500;
 
         var Upgrade1Price = 10;
-        var Upgrade2Price = 20;
+        var Upgrade2Price = 50;
+        var Upgrade3price = 100;
 
         var coinsMultiplier = 1;
 
@@ -211,6 +214,7 @@
         function UpdateCredits() {
             document.getElementById("Credits").innerHTML = Credits;
             document.getElementById("buttonAprice").innerHTML = Upgrade1Price;
+            document.getElementById("buttonBprice").innerHTML = Upgrade2Price;
         }
         setInterval(UpdateCredits, 100)
 
@@ -257,9 +261,17 @@
                     Uncommon -= ChanceIncrease;
                     
                     Credits -= Upgrade1Price;
-                    Upgrade1Price += 10;
+                    Upgrade1Price += 5;
 
                     document.getElementById("DisplayText2").innerHTML = Exotic + " " + Mythic + " " + legendary + " " + Epic + " " + Uncommon
+                } else {
+                    const button = document.getElementById("buttonA");
+                    let buttonhtml = button.innerHTML;
+
+                    button.innerHTML = "Max level Reached!"
+                    setTimeout(() => {
+                        button.innerHTML = buttonhtml;
+                    }, 600);
                 }
             } else {
                 const button = document.getElementById("buttonA");
@@ -274,8 +286,36 @@
         }
 
         function UpgradeCoins() {
+            if (Credits >= Upgrade2Price) {
+                coinsMultiplier += 1;
+                Upgrade2Price += 25;
+            } else {
+                const button = document.getElementById("buttonB");
+                let buttonhtml = button.innerHTML;
 
+                button.innerHTML = "Not enough credits!"
+                setTimeout(() => {
+                    button.innerHTML = buttonhtml;
+                }, 600);
+            }
+        } 
+
+        var animationSpeed = 1;
+
+        function UpgradeSpeed() {
+            if (Credits >= 1) {
+                animationSpeed = Math.max(0.1, animationSpeed - 0.1); // Prevent negative speed
+
+                document.querySelectorAll(".animate").forEach(element => {
+                    element.style.animation = 'none'; // Reset animation
+                    void element.offsetWidth; // Force reflow to restart animation
+                    element.style.animation = `Animation ${animationSpeed}s forwards`;
+                });
+
+            }
         }
+
+
 
 
 
@@ -395,7 +435,7 @@
 
                 PlayRareAnimation()
 
-                Credits += 30;
+                Credits += 30 * coinsMultiplier;
 
 
                 const DisplayText = document.getElementById("DisplayText");
@@ -403,7 +443,7 @@
 
                 centerdiv.style.backgroundColor = "#DC2367";
 
-            } else if (RandomNum > Exotic && RandomNum < Unobtainable) {
+            } else if (RandomNum > Exotic && RandomNum < 1016) {
 
                 var DiscoveryChance = (Math.floor(Math.random() * 100) + 400) * Math.floor(Math.random() * 500);
 
@@ -412,7 +452,7 @@
 
                 UpdateLeaderBoard("Exotic", name, DiscoveryChance, "#7B241C");
 
-                Credits += 20;
+                Credits += 20 * coinsMultiplier;
 
                 PlayRareAnimation()
 
@@ -431,7 +471,7 @@
 
                 UpdateLeaderBoard("Mythic", name, DiscoveryChance, "#D35400");
 
-                Credits += 15;
+                Credits += 15 * coinsMultiplier;
 
                 PlayRareAnimation()
 
@@ -450,7 +490,7 @@
 
                 UpdateLeaderBoard("Legendary", name, DiscoveryChance, "#947b19");
 
-                Credits += 10;
+                Credits += 10 * coinsMultiplier;
 
                 PlayRareAnimation()
 
@@ -469,7 +509,7 @@
 
                 UpdateLeaderBoard("Epic", name, DiscoveryChance, "#2471A3");
 
-                Credits += 5;
+                Credits += 5 * coinsMultiplier;
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
@@ -485,7 +525,7 @@
 
                 UpdateLeaderBoard("Uncommon", name, DiscoveryChance, "#27AE60");
 
-                Credits += 2;
+                Credits += 2 * coinsMultiplier;
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
@@ -501,7 +541,7 @@
 
                 UpdateLeaderBoard("Common", name, DiscoveryChance, "#AAAAAA");
 
-                Credits += 1;
+                Credits += 1 * coinsMultiplier;
 
                 const DisplayText = document.getElementById("DisplayText");
                 DisplayText.innerHTML = ResultString;
