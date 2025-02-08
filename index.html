@@ -126,7 +126,7 @@
     }
 
     .SpinButton:hover {
-        background-color: rgba(255, 136, 136, 0.863);
+        background-color: rgb(172, 225, 238);
     }
 
     .Breathe {
@@ -170,7 +170,7 @@
         position: absolute;
         bottom: 20px;
         padding-bottom: 10px;
-        height: 260px;
+        height: fit-content;
         width: 300px;
         background-color: white;
         font-family: cursive;
@@ -279,12 +279,12 @@
 
 
         function PlayRareAnimation() {
-            const mainContent = document.querySelector('.MainContent');
+            const mainContent = document.getElementById("centerdiv");
             mainContent.style.animation = "GoodSpin 1s infinite";
         }
 
         function StopAnimation() {
-            const mainContent = document.querySelector('.MainContent');
+            const mainContent = document.getElementById("centerdiv");
             mainContent.style.animation = "none";
         }
 
@@ -294,7 +294,7 @@
         let Debounce1 = false;
         function UpgradeChances() {
             if (Credits >= Upgrade1Price) {
-                var ChanceIncrease = 4;
+                var ChanceIncrease = 2;
                 if (Uncommon >= 100) {
                     Exotic -= ChanceIncrease;
                     Mythic -= ChanceIncrease;
@@ -361,7 +361,7 @@
         function UpgradeSpeed() {
             if (Credits >= Upgrade3price) {
                 if (animationSpeed || 0.1) {
-                    animationSpeed = Math.max(0.1, animationSpeed - 0.1);
+                    animationSpeed = Math.max(0.1, animationSpeed - 0.05);
                     Credits -= Upgrade3price;
                     Upgrade3price += 100;
 
